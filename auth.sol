@@ -237,7 +237,7 @@ contract manuContract {
 
     // consumer verify apakah seller punya productnya
     // abc, rar
-    function itemInSeller (string memory productID, string  memory sellerID) public payable returns (string memory) {
+    function itemInSeller (string memory productID, string  memory sellerID, address sellerAddress) public view returns (string memory) {
         // check product exists
         if (!productArray[productID].exists) {
             return "The Product Doesn't Exists!";
@@ -249,7 +249,7 @@ contract manuContract {
 
         for (uint i = 0; i < sellerArray[sellerID].ownedProductID.length; i++) {
             string memory  text = sellerArray[sellerID].ownedProductID[i];
-            if (stringToBytes32(text) == stringToBytes32(productID)) {
+            if (sellerAddress == productArray[text].ownerAddress) {
                 return "This Seller Owns The Product";
             }
         }
